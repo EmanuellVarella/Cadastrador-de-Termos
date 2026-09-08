@@ -5,30 +5,3 @@ arrumar um jeito do programa idenfticar se o tce ja foi cadastrado ARRUMADO
 atualizações futuras:
     adicionar os demais termos
     criar o codigo responsavel pela leitura dos documentos e extração dos dados
-        PyMuPDF
-        pdf2image
-        pytesseract + Tesseract-OCR
-        
-        import fitz  # PyMuPDF
-        from pdf2image import convert_from_path
-        import pytesseract
-
-        def extrair_texto_pdf(caminho_pdf):
-            doc = fitz.open(caminho_pdf)
-            texto_completo = []
-
-            for idx, pagina in enumerate(doc):
-                # 1. Tenta extrair texto nativo
-                texto = pagina.get_text().strip()
-                
-                # 2. Se a página não retornar texto, aplica OCR (PDF escaneado)
-                if not texto:
-                    # Converte a página específica em imagem (ex: 300 DPI)
-                    imagens = convert_from_path(caminho_pdf, first_page=idx+1, last_page=idx+1)
-                    if imagens:
-                        # Extrai o texto da imagem usando Tesseract em Português
-                        texto = pytesseract.image_to_string(imagens[0], lang='por')
-                
-                texto_completo.append(f"--- Página {idx+1} ---\n{texto}")
-
-    return "\n\n".join(texto_completo)
