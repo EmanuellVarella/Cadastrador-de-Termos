@@ -19,7 +19,6 @@ driver.get("https://sipac.ufrn.br/sipac/protocolo/mesa_virtual/lista.jsf")
 time.sleep(1)
 
 # 2. Identificação e entrada das credenciais (temporariamente)
-# Aqui o programa espera você logar no SIPAC
 
 # 3. Acessando a mesa virtual
 mesaVirtual = WebDriverWait(driver, 10000).until(
@@ -360,8 +359,8 @@ for i in tabela.itertuples():
 
         continuar = driver.find_element(By.XPATH, "//input[@value='Continuar >>']")
         continuar.click()
-        tabela.at[n, "Cadastrado"] = "S"
-        
+        tabela.loc[n, "Cadastrado"] = "S"
     n = n+1
 
-print('Fim da aUtomação')
+tabela.to_csv('relacao.csv',  sep=';', index=False)
+print('Fim da automação')
